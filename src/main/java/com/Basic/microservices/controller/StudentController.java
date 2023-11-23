@@ -2,6 +2,7 @@ package com.Basic.microservices.controller;
 
 import com.Basic.microservices.bean.Student;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -23,5 +24,13 @@ public class StudentController {
         students.add(new Student(2,"Sham","Rathod"));
         students.add(new Student(3,"Ram","Patil"));
         return students;
+    }
+
+
+    @GetMapping("students/{id}/{firstname}/{lastname}")
+    public Student studentPathVariable(@PathVariable("id")int studentId,
+                                       @PathVariable("first-name")String firstNmae,
+                                       @PathVariable("last-name")String lastName){
+        return new Student(studentId,firstNmae,lastName);
     }
 }
