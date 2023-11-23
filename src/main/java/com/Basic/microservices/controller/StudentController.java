@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("students")
 public class StudentController {
 
     @GetMapping("/student")
@@ -17,7 +18,7 @@ public class StudentController {
         return student;
     }
 
-    @GetMapping("/students")
+    @GetMapping
     public List<Student> getStudents(){
         List<Student> students = new ArrayList<>();
         students.add(new Student(1,"Radhika","Adhav"));
@@ -27,19 +28,19 @@ public class StudentController {
     }
 
 
-    @GetMapping("students/{id}/{firstname}/{lastname}")
+    @GetMapping("{id}/{firstname}/{lastname}")
     public Student studentPathVariable(@PathVariable("id")int studentId,
                                        @PathVariable("first-name")String firstNmae,
                                        @PathVariable("last-name")String lastName){
         return new Student(studentId,firstNmae,lastName);
     }
 
-    @GetMapping("students/query")
+    @GetMapping("query")
     public Student studentRequestVariable(@RequestParam int id, @RequestParam String firstName, @RequestParam String lastName){
         return new Student(id,firstName,lastName);
     }
 
-    @PostMapping("students/create")
+    @PostMapping("create")
     //@ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Student> createStudent(@RequestBody Student student){
         System.out.println(student.getId());
@@ -48,14 +49,14 @@ public class StudentController {
         return new ResponseEntity<>(student, HttpStatus.CREATED);
     }
 
-    @PutMapping("students/{id}/update")
+    @PutMapping("{id}/update")
     public ResponseEntity<Student> updateStudent(@RequestBody Student student, @PathVariable("id") int studentId){
         System.out.println(student.getFirstName());
         System.out.println(student.getLastName());
         return ResponseEntity.ok(student);
     }
 
-    @DeleteMapping("students/{id}/delete")
+    @DeleteMapping("{id}/delete")
     public ResponseEntity<String> deleteStudent(@PathVariable("id") int studentId){
         System.out.println(studentId);
         return ResponseEntity.ok("Student deleted successfully!");
